@@ -1,0 +1,4 @@
+name: Brainwall
+version: ${project.version}
+main: net.kunmc.lab.brainwall.Brainwall
+api-version: 1.16
