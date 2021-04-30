@@ -3,10 +3,13 @@ package net.kunmc.lab.brainwall;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
-import org.jetbrains.annotations.NotNull;
 
-public class CommandListener implements @NotNull Listener {
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+public class CommandListener implements Listener {
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args){
         if(!cmd.getName().equalsIgnoreCase("brainwall")){
@@ -19,19 +22,23 @@ public class CommandListener implements @NotNull Listener {
             sender.sendMessage("引数が多すぎます");
             return false;
         }
+
         String arg1 = args[0];
 
-        if(arg1.equalsIgnoreCase("on")){
-            WallTask.isEnabled = true;
-            sender.sendMessage("プラグインをオンにしました");
-            return true;
-        } else if(arg1.equalsIgnoreCase("off")){
-            WallTask.isEnabled = false;
-            sender.sendMessage("プラグインをオフにしました");
-            return true;
-        } else {
-            sender.sendMessage("「on」または「off」と入力してください");
+        if(!(arg1.equalsIgnoreCase("setup") || arg1.equalsIgnoreCase("start"))){
+            sender.sendMessage("第1引数には変更したいパラメータを入力してください");
             return false;
         }
+        return false;
+    }
+
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        switch (args.length) {
+            case 1:
+                return Stream.of("setup", "start")
+                        .filter(e -> e.startsWith(args[0]))
+                        .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }

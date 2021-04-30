@@ -1,4 +1,14 @@
 name: Brainwall
 version: ${project.version}
-main: net.kunmc.lab.brainwall.Brainwall
+main: net.kunmc.lab.brainwall.BrainWall
 api-version: 1.16
+commands:
+  brainwall:
+    description: 脳カベを実行するためのコマンドです
+    usage: /brainwall <setup/start>
+    permission: brainwall.operator
+    permission-message: You don't have <permission>
+permissions:
+  brainwall.operator:
+    description: BrainWall operator
+    default: op
